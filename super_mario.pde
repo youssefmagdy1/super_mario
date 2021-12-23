@@ -9,22 +9,12 @@ PImage gnd ;
 
 void setup() {
     size(720, 600);
-    // PImage = loadImage("superMario.jpeg");
-    //  test = new GameObj(20 ,20,true,"superMario.png" , 50 , 50 ) ; 
-    //  test2 = new GameObj(60 ,500,true,"superMario.png" , 50 , 50 ) ; 
-    //  arr[0] = test2 ;
     superMario = new Hero("superMario.png" ) ; 
     Ground.insert(0 ,200) ;
     Ground.insert(200 ,220) ;
     Ground.insert(220 ,300) ;
-    // ground[0] = new Ground(0 , 200 ) ; 
-    // ground[1] = new Ground(200 , 220 ) ; 
-    // ground[2] = new Ground( 220, 300 ) ; 
-    // print(Ground.grounds.from) ;
-    // for(Ground gnd : Ground.grounds)
-    // {
-    //     if(gnd != null)
-    // }
+
+    
     gnd = loadImage("ground.png" );
     Ground.draw(gnd, 40 , 600 ) ;
 
@@ -43,7 +33,11 @@ void draw() {
         if (key == CODED) {
             if (keyCode == UP) 
             {
-                superMario.jump_up() ;
+                if(superMario.is_touch_ground())
+                {
+                    superMario.set_jump_status(20) ;
+                    superMario.jump_up() ;
+                }
             }
             if (keyCode == RIGHT )
             {

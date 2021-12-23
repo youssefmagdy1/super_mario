@@ -28,22 +28,12 @@ PImage gnd ;
 
  public void setup() {
     /* size commented out by preprocessor */;
-    // PImage = loadImage("superMario.jpeg");
-    //  test = new GameObj(20 ,20,true,"superMario.png" , 50 , 50 ) ; 
-    //  test2 = new GameObj(60 ,500,true,"superMario.png" , 50 , 50 ) ; 
-    //  arr[0] = test2 ;
     superMario = new Hero("superMario.png" ) ; 
     Ground.insert(0 ,200) ;
     Ground.insert(200 ,220) ;
     Ground.insert(220 ,300) ;
-    // ground[0] = new Ground(0 , 200 ) ; 
-    // ground[1] = new Ground(200 , 220 ) ; 
-    // ground[2] = new Ground( 220, 300 ) ; 
-    // print(Ground.grounds.from) ;
-    // for(Ground gnd : Ground.grounds)
-    // {
-    //     if(gnd != null)
-    // }
+
+    
     gnd = loadImage("ground.png" );
     Ground.draw(gnd, 40 , 600 ) ;
 
@@ -62,7 +52,11 @@ PImage gnd ;
         if (key == CODED) {
             if (keyCode == UP) 
             {
-                superMario.jump_up() ;
+                if(superMario.is_touch_ground())
+                {
+                    superMario.set_jump_status(20) ;
+                    superMario.jump_up() ;
+                }
             }
             if (keyCode == RIGHT )
             {
@@ -299,56 +293,10 @@ class Hero extends GameObj
         this.change_photo(img_after) ; 
     }
 
-    public void jump(int x , int y   )
-    {
-        int temp = this.check_jump_status(); 
-        // should jump 50 so will call this function 5 time each time with 10 step should put with 6 
-        if(this.is_touch_ground())
-        {
-            println("touch") ;
-            this.set_jump_status(30) ;
-            move(x,y);
-        }
-        else if (temp != 0 )
-        {
-            if(temp > 0 )
-            {
-                println("not") ;
-                // if(temp != 1 )
-                    this.set_jump_status(this.jump_status - 1 ) ;
-                // else 
-                    // this.set_jump_status(-30) ;
-
-                move(x,y) ;
-            }
-            else 
-            {
-                println("wah") ;
-                this.set_jump_status(this.jump_status + 1 ) ;
-                move(x,-y) ;
-    
-            }
-        }
-        else if (this.get_y() < 600-80) 
-        {
-            println("yes") ;
-            move(0,-y) ;
-            this.set_jump_status(-30) ;
-        }
-        // delay(100) ;
-
-    }
     public void jump_up()
     {
-        this.jump(0,-5) ;
-    }
-    public void jump_right()
-    {
-        this.jump(5,-5) ;
-    }
-    public void jump_left()
-    {
-        this.jump(-5,-5) ;
+        this.move(0,-5) ;
+        this.set_jump_status(this.jump_status - 1 ) ;
     }
 
     public void walk_right()
@@ -361,7 +309,7 @@ class Hero extends GameObj
     }
     public void drop_down()
     {
-        this.move(0,-5) ;
+        this.move(0,5) ;
     }
 
     public void set_jump_status(int i )
@@ -383,16 +331,12 @@ class Hero extends GameObj
 
     public void draw( )
     {
-        // if(this.check_jump_status() > 0 && !this.is_touch_ground() )
-        println("rrr") ;
-        if(this.check_jump_status() !=  0  ){
-            println("JUMP") ;
-            this.jump(0,-5) ;
-        }
-        // else if (!this.is_touch_ground() )
-        //     this.drop_down();
-        else 
-            super.draw() ;
+        if(!this.is_touch_ground()  && this.check_jump_status() == 0 )
+            this.drop_down(); 
+        else if( this.check_jump_status() > 0 )
+            this.jump_up() ;
+       
+        super.draw() ;
     }
 
 
