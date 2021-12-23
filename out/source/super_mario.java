@@ -17,54 +17,76 @@ import java.io.IOException;
 
 public class super_mario extends PApplet {
 
+int HEIGHT = 1000 ;
+int WIDTH = 1000 ;
 int x ; 
 GameObj test , test2 ;
 GameObj[] arr = new GameObj[10] ; 
+Hero superMario ;
+PImage gnd ; 
+// Ground[] ground = new Ground[20] ; 
 
  public void setup() {
     /* size commented out by preprocessor */;
     // PImage = loadImage("superMario.jpeg");
-     test = new GameObj(20 ,20,true,"superMario.jpeg" , 50 , 50 ) ; 
-     test2 = new GameObj(60 ,500,true,"superMario.jpeg" , 50 , 50 ) ; 
-     arr[0] = test2 ;
+    //  test = new GameObj(20 ,20,true,"superMario.png" , 50 , 50 ) ; 
+    //  test2 = new GameObj(60 ,500,true,"superMario.png" , 50 , 50 ) ; 
+    //  arr[0] = test2 ;
+    superMario = new Hero("superMario.png" ) ; 
+    Ground.insert(0 ,200) ;
+    Ground.insert(200 ,220) ;
+    Ground.insert(220 ,300) ;
+    // ground[0] = new Ground(0 , 200 ) ; 
+    // ground[1] = new Ground(200 , 220 ) ; 
+    // ground[2] = new Ground( 220, 300 ) ; 
+    // print(Ground.grounds.from) ;
+    // for(Ground gnd : Ground.grounds)
+    // {
+    //     if(gnd != null)
+    // }
+    gnd = loadImage("ground.png" );
+    Ground.draw(gnd, 40 , 600 ) ;
+
+
+
 }
 
  public void draw() {
     background(0, 0, 0);
-    test.draw(0,10);
-    test2.draw(0,0);
 
-    // print(arr) ;
-    switch(test.is_intersect(arr))
+    image(gnd , 0 , 600-40  ) ;
+    gnd.resize(Ground.grounds[0].to , 40) ;
+    
+    if(keyPressed)
     {
-        case 1 :
-            background(255, 0, 0);
-            print(1) ;
-            break ;
-        case 2 :
-            background(255, 255, 0);
-            print(2) ;
-            break ;
-        case 3 :
-            background(255, 255, 255);
-            print(3) ;
-            break ;
-        case 4 :
-            background(0, 255, 0);
-            print(4) ;
-            break ;
-        case -1 :
-            // background(50, 5, 0);
-            print(5) ;
-                break ;
-        default :
-            print(6) ;
-            // background(0, 0, 0);
-            break;	
-
-
+        if (key == CODED) {
+            if (keyCode == UP) 
+            {
+                superMario.jump_up() ;
+            }
+            if (keyCode == RIGHT )
+            {
+                superMario.walk_right() ;
+            }
+            if (keyCode == DOWN) 
+            {
+                superMario.drop_down() ;
+            }
+            if (keyCode == LEFT )
+            {
+                superMario.walk_left() ;
+            }
+        }
     }
-    // image(test.img, 20+x, 20, 20, 20);
+    
+    superMario.draw() ;
+
+    // superMario.move(1 ,0 ) ; 
+    // test.move(0,10);
+    // test2.move(0,0);
+
+    // print(arr) ; 
+       // image(test.img, 20+x, 20, 20, 20);
 
     // x+= 10 ; 
 
@@ -161,12 +183,216 @@ class GameObj {
     
 
     // method to draw how much the object will move in x dir and y dir 
-     public void draw (int x , int y )
+     public void move (int x , int y )
     {
         this.set_x(this.get_x() + x);
         this.set_y(this.get_y() + y);
+        // this.draw() ; 
+    }
 
+    public void draw()
+    {
         image(this.img , this.get_x() , this.get_y() , this.get_height() , this.get_width()) ; 
+    } 
+
+
+}
+static class Ground 
+{
+    static Ground[] grounds = new Ground[20]  ;
+    static int last_index = 0 ;
+    private int from  ,to ; 
+
+    
+    public  Ground (int _from , int _to  )
+    {
+        this.from = _from ;
+        this.to = _to ;
+    }
+    public static void insert(int _from , int _to ) {
+        grounds[last_index++] = new Ground( _from , _to) ;
+    }
+
+    public static void draw (PImage img ,int h , int height  )
+    {
+        int i = -1 ; 
+        int end =0 , start = 0;  
+        for(Ground gnd : Ground.grounds)
+        {
+            i++ ;
+            
+            if(gnd != null )
+            {
+                // println(gnd) ;
+                if(i == 0 )
+                {
+                    // println(2) ; 
+
+                    end = gnd.to ; 
+                    start = gnd.from;
+                    continue ;   
+                }
+                else {
+                    img.copy(start , height-h, (end-start), h 
+                            , gnd.from , height-h , (gnd.to - gnd.from), h);
+
+                    // println(1) ; 
+                }
+            }
+        }
+        // return img ; 
+    }
+
+}
+class Hero extends GameObj
+{
+    int level ;
+    int super_start_time=0 ; 
+    char dir  ;
+    private int jump_status = 0 ; 
+    GameObj[] objects_array ; 
+
+    public Hero(String img)
+    {
+        super(10 , 600-80 ,true , img , 50 , 50) ; 
+
+    }
+
+    public int get_level()
+    {
+        return this.level ;
+    }
+    public void set_level(int l)
+    {
+        this.level = l ;
+    }
+
+    public boolean is_super()
+    {
+        if(this.super_start_time - millis() < 10 * 1000)
+            return true ;
+        else 
+            return false ;
+    }
+    public void  set_super()
+    {
+        this.super_start_time = millis() ; 
+    }
+
+    //  private boolean is_touch_ground(GameObj[] objects_array , Ground[] groundArr )
+    private boolean is_touch_ground( )
+    {
+        // if(this.is_intersect(this.objects_array) > 0 )
+        //     return true ;
+        for(Ground gnd : Ground.grounds)
+            if(gnd != null)
+                if(this.get_x() > gnd.from  && this.get_x() < gnd.to)
+                    if(this.get_y() == 600-80)
+                        return true ;
+        // else 
+        return false ; 
+    }
+
+    public void adj_level(int adj , String img_after )
+    {
+        this.level = adj ;
+        this.change_photo(img_after) ; 
+    }
+
+    public void jump(int x , int y   )
+    {
+        int temp = this.check_jump_status(); 
+        // should jump 50 so will call this function 5 time each time with 10 step should put with 6 
+        if(this.is_touch_ground())
+        {
+            println("touch") ;
+            this.set_jump_status(30) ;
+            move(x,y);
+        }
+        else if (temp != 0 )
+        {
+            if(temp > 0 )
+            {
+                println("not") ;
+                // if(temp != 1 )
+                    this.set_jump_status(this.jump_status - 1 ) ;
+                // else 
+                    // this.set_jump_status(-30) ;
+
+                move(x,y) ;
+            }
+            else 
+            {
+                println("wah") ;
+                this.set_jump_status(this.jump_status + 1 ) ;
+                move(x,-y) ;
+    
+            }
+        }
+        else if (this.get_y() < 600-80) 
+        {
+            println("yes") ;
+            move(0,-y) ;
+            this.set_jump_status(-30) ;
+        }
+        // delay(100) ;
+
+    }
+    public void jump_up()
+    {
+        this.jump(0,-5) ;
+    }
+    public void jump_right()
+    {
+        this.jump(5,-5) ;
+    }
+    public void jump_left()
+    {
+        this.jump(-5,-5) ;
+    }
+
+    public void walk_right()
+    {
+        this.move(10 , 0) ; 
+    }
+    public void walk_left()
+    {
+        this.move(-10 , 0) ; 
+    }
+    public void drop_down()
+    {
+        this.move(0,-5) ;
+    }
+
+    public void set_jump_status(int i )
+    {
+        this.jump_status = i ;
+    }
+
+    public int check_jump_status()
+    {
+        return this.jump_status ; 
+    }
+
+    // public FireBall fire()
+    // {
+    //     FireBall ball = new FireBall( this.get_x()  , this.get_y() , 1 );
+    //     return ball ;  
+    // }
+
+
+    public void draw( )
+    {
+        // if(this.check_jump_status() > 0 && !this.is_touch_ground() )
+        println("rrr") ;
+        if(this.check_jump_status() !=  0  ){
+            println("JUMP") ;
+            this.jump(0,-5) ;
+        }
+        // else if (!this.is_touch_ground() )
+        //     this.drop_down();
+        else 
+            super.draw() ;
     }
 
 
@@ -235,7 +461,7 @@ static class Intersect{
 }
 
 
-  public void settings() { size(512, 512); }
+  public void settings() { size(720, 600); }
 
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "super_mario" };

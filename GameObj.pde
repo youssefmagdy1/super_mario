@@ -90,13 +90,17 @@ class GameObj {
     
 
     // method to draw how much the object will move in x dir and y dir 
-    void draw (int x , int y )
+    void move (int x , int y )
     {
         this.set_x(this.get_x() + x);
         this.set_y(this.get_y() + y);
-
-        image(this.img , this.get_x() , this.get_y() , this.get_height() , this.get_width()) ; 
+        // this.draw() ; 
     }
+
+    public void draw()
+    {
+        image(this.img , this.get_x() , this.get_y() , this.get_height() , this.get_width()) ; 
+    } 
 
 
 }
