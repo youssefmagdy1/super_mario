@@ -4,7 +4,7 @@ int x ;
 GameObj test , test2 ;
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;
-PImage gnd , superMarioRed , su ; 
+// PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
 
 void setup() {
