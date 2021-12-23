@@ -4,11 +4,12 @@ int x ;
 GameObj test , test2 ;
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;
-PImage gnd ; 
+PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
 
 void setup() {
     size(720, 600);
+
     superMario = new Hero("superMario.png" ) ; 
     Ground.insert(0 ,200) ;
     Ground.insert(200 ,220) ;
@@ -25,8 +26,12 @@ void setup() {
 void draw() {
     background(0, 0, 0);
 
+    //draw the ground  
     image(gnd , 0 , 600-40  ) ;
     gnd.resize(Ground.grounds[0].to , 40) ;
+
+    // draw the shapes 
+
     
     if(keyPressed)
     {
