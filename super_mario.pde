@@ -2,7 +2,7 @@ int HEIGHT = 1000 ;
 int WIDTH = 1000 ;
 int x ; 
 GameObj test , test2 ;
-GameObj[] arr = new GameObj[10] ; 
+GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;
 PImage gnd ; 
 // Ground[] ground = new Ground[20] ; 
@@ -14,7 +14,7 @@ void setup() {
     Ground.insert(200 ,220) ;
     Ground.insert(220 ,300) ;
 
-    
+
     gnd = loadImage("ground.png" );
     Ground.draw(gnd, 40 , 600 ) ;
 
@@ -41,15 +41,20 @@ void draw() {
             }
             if (keyCode == RIGHT )
             {
-                superMario.walk_right() ;
+                if(superMario.is_intersect(shapes) != 4)
+                    superMario.walk_right() ;
             }
             if (keyCode == DOWN) 
             {
-                superMario.drop_down() ;
+                if(!superMario.is_touch_ground())
+                {
+                    superMario.drop_down() ;
+                }
             }
             if (keyCode == LEFT )
             {
-                superMario.walk_left() ;
+                if(superMario.is_intersect(shapes) != 3)
+                    superMario.walk_left() ;
             }
         }
     }
