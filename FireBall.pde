@@ -28,9 +28,20 @@ class FireBall extends GameObj
         return this.from ; 
     }
 
-    // public int update()
-    // {
-        // if()
-    
-    // }
+    public int update()
+    {
+        // edit x 
+        if(this.get_dir() == 'L')
+            this.move(-5,x) ;  
+        else 
+            this.move(5,x) ;  
+            
+        // edit y  
+        /* edit this  to mario/2  */
+        if (this.get_y() > 25)
+            this.move(0,5) ;
+        else 
+            
+        
+    }
 }
