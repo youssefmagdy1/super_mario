@@ -127,7 +127,7 @@ void draw() {
             }
             else
             {
-                ball.update();
+                ball.update(screen_height , Ground.height , mario_height);
                 ball.draw() ;
             }
             
