@@ -6,13 +6,20 @@ int WIDTH = 1000 ;
 int x , temp =0 , temp2 =0 ; 
 int half_screen = 400 ; // how the mario go so far half 
 
+
+boolean isShiftPressed = false ,
+        isUPPressed = false ,
+        isRIGHTPressed = false ,
+        isLEFTPressed = false ,
+        isDOWNPressed = false ;
+
 // Stack<FireBall> mario_fire = new Stack<FireBall> ;
 List<FireBall> mario_fire=new ArrayList<FireBall>();  
 
 
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;  
-PImage mario_jump , mario , fire_ball; 
+PImage mario_jump , mario_left , mario_right , fire_ball; 
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
@@ -34,19 +41,20 @@ void setup() {
 
     gnd = loadImage("ground.png" );
     mario_jump = loadImage("mario_jump.png" );
-    mario = loadImage("mario_left_pos0.png") ;
+    mario_right= loadImage("mario_left_pos0.png") ;
+    mario_left = loadImage("mario_right_pos0.png") ;
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
 
 
 
-    superMario = new Hero( mario) ; 
+    superMario = new Hero( mario_right) ; 
     Ground.insert(0 ,1000) ;
 
 
     shapes[0] = new GameObj(500 , (600-100)-88 , false , pipe , 100 , 200 ) ;
 
-    mario_photos_arr[0] = mario ; mario_photos_arr[1] = mario_jump ; 
+    mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
@@ -143,7 +151,7 @@ void draw() {
             if (keyCode == RIGHT )
             {
                 if(superMario.is_intersect(shapes) != 3)
-                    superMario.walk_right() ;
+                    superMario.walk_right(mario_left) ;
             }
             if (keyCode == DOWN) 
             {
@@ -156,7 +164,7 @@ void draw() {
             {
                 if (superMario.get_x() > half_screen-399)
                     if(superMario.is_intersect(shapes) != 4)
-                        superMario.walk_left() ;
+                        superMario.walk_left(mario_right) ;
             }
             // for fire ball 
             if(keyCode == SHIFT)
@@ -178,5 +186,18 @@ void draw() {
 
 }
 
+// void keyPressed() {
+//   if (keyCode == SHIFT ) isShiftPressed = true;
+//   if (keyCode == UP ) isUPPressed = true;
+//   if (keyCode == RIGHT ) isRIGHTPressed = true;
+//   if (keyCode == LEFT ) isLEFTPressed = true;
+//   if (keyCode == DOWN ) isDOWNPressed = true;
+
+
+// }
+// void keyReleased() {
+//   if (keyCode == SHIFT) isShiftPressed = false;
+//   if (char(keyCode) == 'R') isRPressed = false;
+// }
 
 //done

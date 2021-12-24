@@ -2,15 +2,43 @@ static class Intersect{
 
     static int check (GameObj obj1 , GameObj obj2 )
     {
-       int obj1_x = obj1.get_x()  ,
-           obj1_y = obj1.get_y() ,
-           obj1_h = obj1.get_height() ,
-           obj1_w = obj1.get_width() ;
+    //    int obj1_x = obj1.get_x()  ,
+    //        obj1_y = obj1.get_y() ,
+    //        obj1_h = obj1.get_height() ,
+    //        obj1_w = obj1.get_width() ;
 
-       int obj2_x = obj2.get_x()  ,
-           obj2_y = obj2.get_y() ,
-           obj2_h = obj2.get_height() ,
-           obj2_w = obj2.get_width() ;
+    //    int obj2_x = obj2.get_x()  ,
+    //        obj2_y = obj2.get_y() ,
+    //        obj2_h = obj2.get_height() ,
+    //        obj2_w = obj2.get_width() ;
+
+
+           boolean check = obj1.get_width() < obj2.get_width();
+            int obj1_x,obj1_y,obj1_h,obj1_w,obj2_x,obj2_y,obj2_h,obj2_w;
+            if(check){
+                // to insure that the first object i always the smallest in width.
+                obj1_x = obj1.get_x() ;
+                obj1_y = obj1.get_y() ;
+                obj1_h = obj1.get_height() ;
+                obj1_w = obj1.get_width() ;
+
+                obj2_x = obj2.get_x()  ;
+                obj2_y = obj2.get_y() ;
+                obj2_h = obj2.get_height() ;
+                obj2_w = obj2.get_width() ;
+
+            }else{
+                
+                obj2_x = obj1.get_x()  ;
+                obj2_y = obj1.get_y() ;
+                obj2_h = obj1.get_height() ;
+                obj2_w = obj1.get_width() ;
+
+                obj1_x = obj2.get_x()  ;
+                obj1_y = obj2.get_y() ;
+                obj1_h = obj2.get_height() ;
+                obj1_w = obj2.get_width() ;
+            }
 
 
         
@@ -42,7 +70,7 @@ static class Intersect{
 
 
         //right 
-        else if ( obj1_x == obj2_x +obj2_w
+        else if ( obj1_x == obj2_x +obj2_w && obj1_x <= obj2_x+obj2_w
             &&(   (obj1_y >= obj2_y && obj1_y <= obj2_y+obj2_h  ) 
                 ||( obj1_y+obj1_h >= obj2_y && obj1_y+obj1_h <= obj2_y+obj2_h  ) 
             )

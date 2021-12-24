@@ -65,14 +65,19 @@ class Hero extends GameObj
         this.set_jump_status(this.jump_status - 1 ) ;
     }
 
-    public void walk_right()
+    public void walk_right(PImage img )
     {
         this.move(10 , 0) ; 
+        if(this.get_dir() != 'R')
+            this.change_photo(img , 50 ,50 ) ;
         this.set_dir('R') ;
+        
     }
-    public void walk_left()
+    public void walk_left(PImage img)
     {
         this.move(-10 , 0) ; 
+        if(this.get_dir() != 'R')
+            this.change_photo(img , 50 ,50 ) ;
         this.set_dir('L') ;
 
     }
@@ -105,7 +110,10 @@ class Hero extends GameObj
         else if( this.check_jump_status() > 0 )
             this.jump_up() ;
         else 
-            change_photo(img_arr[0] , 50 , 50 ) ;
+            if(this.get_dir()=='R')
+                change_photo(img_arr[0] , 50 , 50 ) ;
+            else 
+                change_photo(img_arr[1] , 50 , 50 ) ;
 
         super.draw() ;
     }
