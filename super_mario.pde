@@ -136,38 +136,41 @@ void draw() {
 
 
     // move mario on key press 
-    if(keyPressed)
-    {
-        if (key == CODED) {
-            if (keyCode == UP) 
+    // if(keyPressed)
+    // {
+        // if (key == CODED) {
+            // if (keyCode == UP) 
+            if (isUPPressed) 
             {
                 if(superMario.is_touch_ground(shapes))
                 {
-                    superMario.set_jump_status(20) ;
+                    superMario.set_jump_status(30) ;
                     superMario.change_photo(mario_jump,50,50) ;
                     superMario.jump_up() ;
                 }
             }
-            if (keyCode == RIGHT )
+            // if (keyCode == RIGHT )
+            if (isRIGHTPressed)
             {
                 if(superMario.is_intersect(shapes) != 3)
                     superMario.walk_right(mario_left) ;
             }
-            if (keyCode == DOWN) 
+            // if (keyCode == DOWN) 
+            if (isDOWNPressed) 
             {
                 if(!superMario.is_touch_ground(shapes))
                 {
                     superMario.drop_down() ;
                 }
             }
-            if (keyCode == LEFT )
+            if (isLEFTPressed)
             {
                 if (superMario.get_x() > half_screen-399)
                     if(superMario.is_intersect(shapes) != 4)
                         superMario.walk_left(mario_right) ;
             }
             // for fire ball 
-            if(keyCode == SHIFT)
+            if(isShiftPressed)
             {
                 if(superMario.get_last_time_fire()+300 < millis() )
                 {
@@ -176,8 +179,8 @@ void draw() {
                     superMario.set_last_time_fire(millis()) ;
                 }
             }
-        }
-    }
+        // }
+    // }
     
     // println(this.superMario.is_intersect(shapes)) ;
     // draw super mario 
@@ -186,18 +189,21 @@ void draw() {
 
 }
 
-// void keyPressed() {
-//   if (keyCode == SHIFT ) isShiftPressed = true;
-//   if (keyCode == UP ) isUPPressed = true;
-//   if (keyCode == RIGHT ) isRIGHTPressed = true;
-//   if (keyCode == LEFT ) isLEFTPressed = true;
-//   if (keyCode == DOWN ) isDOWNPressed = true;
+void keyPressed() {
+  if (keyCode == SHIFT ) isShiftPressed = true;
+  if (keyCode == UP ) isUPPressed = true;
+  if (keyCode == RIGHT ) isRIGHTPressed = true;
+  if (keyCode == LEFT ) isLEFTPressed = true;
+  if (keyCode == DOWN ) isDOWNPressed = true;
 
 
-// }
-// void keyReleased() {
-//   if (keyCode == SHIFT) isShiftPressed = false;
-//   if (char(keyCode) == 'R') isRPressed = false;
-// }
+}
+void keyReleased() {
+  if (keyCode == SHIFT ) isShiftPressed = false;
+  if (keyCode == UP ) isUPPressed = false;
+  if (keyCode == RIGHT ) isRIGHTPressed = false;
+  if (keyCode == LEFT ) isLEFTPressed = false;
+  if (keyCode == DOWN ) isDOWNPressed = false;
 
-//done
+}
+
