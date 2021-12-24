@@ -3,8 +3,9 @@ import java.util.*;
 
 int screen_width = 1000 ; int screen_height = 600 ;
 int half_screen = screen_width/2 ; 
-int ground_height = 100 ;
-
+int ground_height = 100;
+int background_counter = 1;
+boolean background_f = true;
 
 int mario_height = 50 ;
 int mario_width = 50 ; 
@@ -30,7 +31,7 @@ PImage mario_jump , mario_left , mario_right , fire_ball;
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
-PImage gnd , pipe , block;
+PImage gnd , pipe , block, background_day, background_night;
 
 /*
     0=> orignal 
@@ -54,6 +55,11 @@ void setup() {
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
     block = loadImage("pngegg (1).png") ;
+    background_day = loadImage("sky_day.jpg");
+    background_night = loadImage("sky_night.jpg");
+    
+    background_day.resize(1000, 600);
+    background_night.resize(1000, 600);
 
 
 
@@ -74,7 +80,20 @@ void setup() {
 void draw() {
 
     // background 
-    background(0, 0, 0);
+    int co = millis();
+    if(co > (10000 * background_counter)){
+        ++background_counter;
+        if(background_f == true)
+            background_f = false;
+        else
+          background_f = true;
+    }
+    
+    if(background_f == true)
+        background(background_day);
+    else
+      background(background_night);
+
 
 
     // when move to half of screen  translate the screen
@@ -218,4 +237,3 @@ void keyReleased() {
   if (keyCode == DOWN ) isDOWNPressed = false;
 
 }
-
