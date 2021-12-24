@@ -11,8 +11,9 @@ List<FireBall> mario_fire=new ArrayList<FireBall>();
 
 
 GameObj[] shapes = new GameObj[10] ; 
-Hero superMario ;
+Hero superMario ;  
 PImage mario_jump , mario , fire_ball; 
+
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
 PImage gnd , pipe;
@@ -33,7 +34,7 @@ void setup() {
 
     gnd = loadImage("ground.png" );
     mario_jump = loadImage("mario_jump.png" );
-    mario = loadImage("superMario.png") ;
+    mario = loadImage("mario_left_pos0.png") ;
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
 
