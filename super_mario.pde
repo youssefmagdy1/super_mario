@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import java.util.*;
 
-=======
-//alllllllllllllllllo
->>>>>>> 33cad6ea64eb3806c67b4dc955a92481bae9de4a
 int HEIGHT = 1000 ;
 int WIDTH = 1000 ;
 int x , temp =0 , temp2 =0 ; 

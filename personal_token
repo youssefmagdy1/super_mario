@@ -1,0 +1,9 @@
+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
+
+
+to push code for reposity
+
+git add .
+git commit -m "message for the commit"
+git remote add origin https://github.com/youssefmagdy1/super_mario.git
+git push origin master
