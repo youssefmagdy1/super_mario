@@ -9,7 +9,7 @@ int ground_height = 100 ;
 int mario_height = 50 ;
 int mario_width = 50 ; 
 
-int mario_jump_step = 50 ; // this step is * by 5 
+int mario_jump_step = 40 ; // this step is * by 5 
 int time_between_fireball = 400 ; // this time is in millesec
 
 
@@ -26,11 +26,14 @@ List<FireBall> mario_fire=new ArrayList<FireBall>();
 
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;  
+Evil[] evils = new Evil[10] ;
+
 PImage mario_jump , mario_left , mario_right , fire_ball; 
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
 PImage gnd , pipe , block;
+PImage evil_img ;
 
 /*
     0=> orignal 
@@ -54,17 +57,22 @@ void setup() {
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
     block = loadImage("pngegg (1).png") ;
+    evil_img = loadImage("pngegg (5).png") ;
+
+    mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
 
 
 
     superMario = new Hero( mario_right , mario_height , mario_width , screen_height) ; 
-    Ground.insert(0 ,1000) ;
 
+    Ground.insert(-10 ,1000) ;
 
     shapes[0] = new GameObj(500 , (600-100)-200 , false , pipe , 200 , 200 ) ;
     shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
 
-    mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
+    evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
+
+
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
@@ -86,6 +94,17 @@ void draw() {
     else 
     {
         translate(-half_screen+(screen_width/2) , 0 ) ;
+    }
+
+
+    for(Evil evil : evils)
+    {
+        if(evil != null)
+        {
+            println("done") ;
+            evil.update(shapes) ;
+            evil.draw() ;
+        }
     }
 
 
@@ -123,7 +142,6 @@ void draw() {
             {
                 // iter.remove();
                 // mario_fire.remove(ball) ;
-                println("done") ;
             }
             else
             {
@@ -139,11 +157,7 @@ void draw() {
     for(GameObj shape : shapes)
     {
         if(shape != null)
-        {
-            // ball.update();
             shape.draw() ;
-            
-        }
     }
 
 
@@ -177,7 +191,7 @@ void draw() {
             }
             if (isLEFTPressed)
             {
-                if (superMario.get_x() > half_screen-screen_width/2)
+                if (superMario.get_x() > half_screen-screen_width/2 )
                     if(superMario.is_intersect(shapes) != 4)
                         superMario.walk_left(mario_right) ;
             }

@@ -43,8 +43,8 @@ static class Intersect{
 
         
 
-        println(obj2_h , obj2_w , obj2_x , obj2_y ) ;
-        println(obj1_h , obj1_w , obj1_x , obj1_y ) ;
+        // println(obj2_h , obj2_w , obj2_x , obj2_y ) ;
+        // println(obj1_h , obj1_w , obj1_x , obj1_y ) ;
         //down
         // obj1 hit obj2 from bottom 
         if( abs( obj1_y + obj1_h - obj2_y )< 5   
