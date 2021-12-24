@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import java.util.*;
 
-=======
-//alllllllllllllllllo
->>>>>>> 33cad6ea64eb3806c67b4dc955a92481bae9de4a
 int HEIGHT = 1000 ;
 int WIDTH = 1000 ;
 int x , temp =0 , temp2 =0 ; 
@@ -18,7 +14,7 @@ Hero superMario ;
 PImage mario_jump , mario , fire_ball; 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
-PImage gnd ;
+PImage gnd , pipe;
 
 /*
     0=> orignal 
@@ -38,16 +34,17 @@ void setup() {
     mario_jump = loadImage("mario_jump.png" );
     mario = loadImage("superMario.png") ;
     fire_ball = loadImage("fireball.png") ;
+    pipe = loadImage("pngegg (2).png") ;
 
 
 
     superMario = new Hero( mario) ; 
     Ground.insert(0 ,1000) ;
-    // Ground.insert(190 ,220) ;
-    // Ground.insert(200 ,600) ;
 
 
-   mario_photos_arr[0] = mario ; mario_photos_arr[1] = mario_jump ; 
+    shapes[0] = new GameObj(500 , (600-100)-88 , false , pipe , 100 , 200 ) ;
+
+    mario_photos_arr[0] = mario ; mario_photos_arr[1] = mario_jump ; 
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
@@ -67,8 +64,9 @@ void draw() {
         half_screen = superMario.get_x() ; 
     }
     else 
+    {
         translate(-half_screen+400 , 0 ) ;
-
+    }
 
 
     // draw the ground
@@ -93,16 +91,39 @@ void draw() {
     }
 
     // move the fireballs 
-    // for(FireBall ball : mario_fire)
-    // {
-    //     if(ball != null)
-    //     {
-    //         ball.update();
-    //         ball.draw() ;
-
+    // Iterator<FireBall> iter =  mario_fire.iterator(); 
+    for(FireBall ball : mario_fire)
+    {
+        // FireBall str = iter.next();
+        if(ball != null)
+        {
+            if(ball.is_intersect(shapes) > 0 ) 
+            {
+                // iter.remove();
+                // mario_fire.remove(ball) ;
+                println("done") ;
+            }
+            else
+            {
+                ball.update();
+                ball.draw() ;
+            }
             
-    //     }
-    // }
+        }
+        
+    }
+
+    // draw shapes 
+    for(GameObj shape : shapes)
+    {
+        if(shape != null)
+        {
+            // ball.update();
+            shape.draw() ;
+            
+        }
+    }
+
 
     // move mario on key press 
     if(keyPressed)
@@ -119,7 +140,7 @@ void draw() {
             }
             if (keyCode == RIGHT )
             {
-                if(superMario.is_intersect(shapes) != 4)
+                if(superMario.is_intersect(shapes) != 3)
                     superMario.walk_right() ;
             }
             if (keyCode == DOWN) 
@@ -132,18 +153,23 @@ void draw() {
             if (keyCode == LEFT )
             {
                 if (superMario.get_x() > half_screen-399)
-                    if(superMario.is_intersect(shapes) != 3)
+                    if(superMario.is_intersect(shapes) != 4)
                         superMario.walk_left() ;
             }
+            // for fire ball 
             if(keyCode == SHIFT)
             {
-                mario_fire.add(new FireBall(1 , superMario.get_x() , superMario.get_y() , 
+                if(superMario.get_last_time_fire()+300 < millis() )
+                {
+                    mario_fire.add(new FireBall(1 , superMario.get_x() , superMario.get_y() , 
                                 fire_ball , superMario.get_dir())) ;
+                    superMario.set_last_time_fire(millis()) ;
+                }
             }
         }
     }
     
-
+    // println(this.superMario.is_intersect(shapes)) ;
     // draw super mario 
     superMario.draw(mario_photos_arr , shapes) ;
 

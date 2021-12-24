@@ -5,6 +5,7 @@ class Hero extends GameObj
     char dir  ;
     private int jump_status = 0 ; 
     GameObj[] objects_array ; 
+    int last_time_fire =0 ;
 
     public Hero(PImage img)
     {
@@ -109,7 +110,14 @@ class Hero extends GameObj
         super.draw() ;
     }
 
-   
+    public int get_last_time_fire()
+    {
+        return this.last_time_fire ; 
+    }
+    public void set_last_time_fire(int t)
+    {
+        this.last_time_fire = t  ; 
+    }
 
 
 }

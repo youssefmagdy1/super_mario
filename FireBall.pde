@@ -15,7 +15,7 @@ class FireBall extends GameObj
 
     public FireBall (int from , int x , int y, PImage img , char dir )
     {
-        super(x ,y ,true , img , 5 , 5 ) ;
+        super(x ,y ,true , img , 20 , 20 ) ;
         this.set_from(from) ;
         this.set_dir(dir) ;
     }
@@ -28,20 +28,26 @@ class FireBall extends GameObj
         return this.from ; 
     }
 
-    public int update()
+    public void update()
     {
+        int temp = Math.round( sin(this.theta)*15) ;
         // edit x 
         if(this.get_dir() == 'L')
-            this.move(-5,x) ;  
+            this.move(-4,0) ;  
         else 
-            this.move(5,x) ;  
+            this.move(4,0) ;  
             
         // edit y  
         /* edit this  to mario/2  */
-        if (this.get_y() > 25)
-            this.move(0,5) ;
-        else 
-            
-        
+        // if (this.get_y() < 600-25 +100 )
+        //     this.move(0,5) ;
+        // else 
+            this.set_y(470 + temp ) ;
+            // this.move(0 , sin(theta) *20 );
+        // if(this.get_y() < 300)
+
+        // println(this.get_x() + " "+this.get_y() + " " + temp ) ;
+        this.theta += 0.2 ; 
     }
+
 }
