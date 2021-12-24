@@ -14,34 +14,37 @@ static class Ground
         grounds[last_index++] = new Ground( _from , _to) ;
     }
 
-    public static void draw (PImage img ,int h , int height  )
-    {
-        int i = -1 ; 
-        int end =0 , start = 0;  
-        for(Ground gnd : Ground.grounds)
-        {
-            i++ ;
+    // public  void draw (PImage img ,int h , int height  )
+    // {
+    //     int i = -1 ; 
+    //     int end =0 , start = 0;  
+    //     for(Ground gnd : Ground.grounds)
+    //     {
+
+    //         image(img , gnd.from ,600-40);
+    //         img.resize(gnd.to  , 40 ) ;
+    //         // i++ ;
             
-            if(gnd != null )
-            {
-                // println(gnd) ;
-                if(i == 0 )
-                {
-                    // println(2) ; 
+    //         // if(gnd != null )
+    //         // {
+    //         //     // println(gnd) ;
+    //         //     if(i == 0 )
+    //         //     {
+    //         //         // println(2) ; 
 
-                    end = gnd.to ; 
-                    start = gnd.from;
-                    continue ;   
-                }
-                else {
-                    img.copy(start , height-h, (end-start), h 
-                            , gnd.from , height-h , (gnd.to - gnd.from), h);
+    //         //         end = gnd.to ; 
+    //         //         start = gnd.from;
+    //         //         continue ;   
+    //         //     }
+    //         //     else {
+    //         //         img.copy(start , height-h, (end-start), h 
+    //         //                 , gnd.from , height-h , (gnd.to - gnd.from), h);
 
-                    // println(1) ; 
-                }
-            }
-        }
-        // return img ; 
-    }
+    //         //         // println(1) ; 
+    //         //     }
+    //         // }
+    //     }
+    //     // return img ; 
+    // }
 
 }

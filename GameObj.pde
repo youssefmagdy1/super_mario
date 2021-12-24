@@ -9,12 +9,11 @@ class GameObj {
     public boolean is_move , is_vis; 
     
 
-    public GameObj(int _x , int _y , boolean _is_move , String img, int h , int w)
+    public GameObj(int _x , int _y , boolean _is_move , PImage img, int h , int w)
     {
         this.set_coordintes(_x,_y ); 
         this.is_move = _is_move ; 
-        this.change_photo(img) ; 
-        this.resize(h,w) ;
+        this.change_photo(img,h,w) ; 
 
         // this.set_height(height);
         // this.set_width(width) ; 
@@ -61,9 +60,11 @@ class GameObj {
     }
 
 
-    void change_photo(String  _img )
+    void change_photo(PImage  _img , int h , int w )
     {
-        this.img = loadImage(_img) ; 
+        this.img = _img ; 
+        if(h!= -1 && w != -1  )
+            this.resize(h,w) ;
     }
 
     /* check if intersect 
@@ -76,15 +77,16 @@ class GameObj {
     int is_intersect (GameObj[] objects_array)
     {
         int temp =-1 ;
-        for(GameObj obj : objects_array)
-        {
-            if(obj != null)
+        if(objects_array != null)
+            for(GameObj obj : objects_array)
             {
-                temp = Intersect.check(this , obj) ;
-                if (temp > 0 )
-                    break ;  
-            }         
-        }
+                if(obj != null)
+                {
+                    temp = Intersect.check(this , obj) ;
+                    if (temp > 0 )
+                        break ;  
+                }         
+            }
         return temp ;
     } 
     
@@ -102,5 +104,14 @@ class GameObj {
         image(this.img , this.get_x() , this.get_y() , this.get_height() , this.get_width()) ; 
     } 
 
+    public char get_dir()
+    {   
+        return this.dir ; 
+    }
+
+    public void  set_dir(char _dir  )
+    {
+        this.dir = _dir ;
+    }
 
 }
