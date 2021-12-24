@@ -6,6 +6,7 @@ int half_screen = screen_width/2 ;
 int ground_height = 100;
 int background_counter = 1;
 boolean background_f = true;
+int change_backgrond_sec = 30 ; // in 
 
 int mario_height = 50 ;
 int mario_width = 50 ; 
@@ -97,7 +98,7 @@ void draw() {
 
     // background 
     int co = millis();
-    if(co > (1000 * background_counter)){
+    if(co > ( change_backgrond_sec * 1000 * background_counter)){
         ++background_counter;
         if(background_f == true)
             background_f = false;
@@ -241,7 +242,7 @@ void draw() {
     
     // println(this.superMario.is_intersect(shapes)) ;
     // draw super mario 
-    superMario.draw(mario_photos_arr , shapes) ;
+    superMario.draw(mario_photos_arr , shapes , evils) ;
 
 
 }
