@@ -188,10 +188,31 @@ void draw() {
     for(GameObj shape : shapes)
     {
         if(shape != null)
+<<<<<<< Updated upstream
+=======
+        {
+            // ball.update();
+            int intersection = Intersect.check(superMario, shape);
+            boolean special_status = shape.get_special();
+            if(special_status){
+              String special_type = shape.get_special_type();
+              if(special_type == "block"){
+                if(intersection == 1){
+                  block_effect();
+                }
+              }
+              else if(intersection > 0 && special_type == "evil"){
+              
+                evil_effect();
+              }
+              
+        }
+          
+>>>>>>> Stashed changes
             shape.draw() ;
     }
 
-
+    
     // move mario on key press 
     // if(keyPressed)
     // {
@@ -263,3 +284,14 @@ void keyReleased() {
   if (keyCode == DOWN ) isDOWNPressed = false;
 
 }
+<<<<<<< Updated upstream
+=======
+
+
+void block_effect(){
+  println("block effect");
+}
+void evil_effect(){
+  println("evil effect");
+}
+>>>>>>> Stashed changes

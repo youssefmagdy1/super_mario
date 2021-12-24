@@ -6,15 +6,20 @@ class GameObj {
     protected int x_pos , y_pos ;
     protected char dir ;
     protected float img_scale ;
+    protected boolean is_special =false;
+    protected String special_type = null;
     public boolean is_move , is_vis; 
     
-
     public GameObj(int _x , int _y , boolean _is_move , PImage img, int h , int w)
+    {
+      this(_x, _y, _is_move, img, h, w, null);   
+    }
+    public GameObj(int _x , int _y , boolean _is_move , PImage img, int h , int w, String type)
     {
         this.set_coordintes(_x,_y ); 
         this.is_move = _is_move ; 
         this.change_photo(img,h,w) ; 
-
+        this.set_type(type);
         // this.set_height(height);
         // this.set_width(width) ; 
 
@@ -58,8 +63,26 @@ class GameObj {
     {
         this.img.resize(x,y) ; 
     }
-
-
+    
+    void set_special(){
+      is_special = true;
+    }
+    
+    boolean get_special(){
+      return is_special;
+    }
+    
+    void set_type(String type){
+      if(type != null){
+        special_type = type;
+        set_special();
+      }
+    }
+    
+    String get_type(){
+      return special_type;
+    }
+    
     void change_photo(PImage  _img , int h , int w )
     {
         this.img = _img ; 
@@ -84,6 +107,7 @@ class GameObj {
                 {
                     temp = Intersect.check(this , obj) ;
                     if (temp > 0 )
+                        
                         break ;  
                 }         
             }
