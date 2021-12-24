@@ -1,3 +1,4 @@
+//alllllllllllllllllo
 int HEIGHT = 1000 ;
 int WIDTH = 1000 ;
 int x ; 
