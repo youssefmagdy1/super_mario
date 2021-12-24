@@ -27,7 +27,7 @@ List<FireBall> mario_fire=new ArrayList<FireBall>();
 
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;  
-PImage mario_jump , mario_left , mario_right , fire_ball; 
+PImage mario_jump , mario_left , mario_right , fire_ball, sun, moon; 
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
@@ -57,12 +57,17 @@ void setup() {
     block = loadImage("pngegg (1).png") ;
     background_day = loadImage("sky_day.jpg");
     background_night = loadImage("sky_night.jpg");
+    sun = loadImage("sun.png");
+    moon = loadImage("moon.png");
+    
     
     background_day.resize(1000, 600);
     background_night.resize(1000, 600);
-
-
-
+    sun.resize(150, 150);
+    moon.resize(150, 150);
+    
+    
+    
     superMario = new Hero( mario_right , mario_height , mario_width , screen_height) ; 
     Ground.insert(0 ,1000) ;
 
@@ -81,7 +86,7 @@ void draw() {
 
     // background 
     int co = millis();
-    if(co > (10000 * background_counter)){
+    if(co > (1000 * background_counter)){
         ++background_counter;
         if(background_f == true)
             background_f = false;
@@ -89,12 +94,16 @@ void draw() {
           background_f = true;
     }
     
-    if(background_f == true)
+    if(background_f == true){    
         background(background_day);
-    else
-      background(background_night);
+        image(sun, 50, 50);  
+    }
+    else{
+        background(background_night);
+        image(moon, 50, 50);
+      }
 
-
+    
 
     // when move to half of screen  translate the screen
     if(superMario.get_x() > half_screen )
