@@ -1,12 +1,19 @@
 ///adfaffsdfsfdasfsafd
 import java.util.*;
 
-int HEIGHT = 1000 ;
-int WIDTH = 1000 ;
-int x , temp =0 , temp2 =0 ; 
-int half_screen = 400 ; // how the mario go so far half 
+int screen_width = 1000 ; int screen_height = 600 ;
+int half_screen = screen_width/2 ; 
+int ground_height = 100 ;
 
 
+int mario_height = 50 ;
+int mario_width = 50 ; 
+
+int mario_jump_step = 50 ; // this step is * by 5 
+int time_between_fireball = 400 ; // this time is in millesec
+
+
+// values of keyboard keys 
 boolean isShiftPressed = false ,
         isUPPressed = false ,
         isRIGHTPressed = false ,
@@ -23,7 +30,7 @@ PImage mario_jump , mario_left , mario_right , fire_ball;
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
-PImage gnd , pipe;
+PImage gnd , pipe , block;
 
 /*
     0=> orignal 
@@ -36,7 +43,8 @@ PImage gnd , pipe;
 PImage[] mario_photos_arr =  new PImage[6] ; 
 
 void setup() {
-    size(800, 600);
+    size(1000, 600);
+    Ground.height = ground_height ; 
 
 
     gnd = loadImage("ground.png" );
@@ -45,14 +53,16 @@ void setup() {
     mario_left = loadImage("mario_right_pos0.png") ;
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
+    block = loadImage("pngegg (1).png") ;
 
 
 
-    superMario = new Hero( mario_right) ; 
+    superMario = new Hero( mario_right , mario_height , mario_width , screen_height) ; 
     Ground.insert(0 ,1000) ;
 
 
-    shapes[0] = new GameObj(500 , (600-100)-88 , false , pipe , 100 , 200 ) ;
+    shapes[0] = new GameObj(500 , (600-100)-200 , false , pipe , 200 , 200 ) ;
+    shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
 
     mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
     // Ground.draw(gnd, 40 , 600 ) ;
@@ -70,12 +80,12 @@ void draw() {
     // when move to half of screen  translate the screen
     if(superMario.get_x() > half_screen )
     {
-        translate( -superMario.get_x() +400 , 0 );
+        translate( -superMario.get_x() +(screen_width/2) , 0 );
         half_screen = superMario.get_x() ; 
     }
     else 
     {
-        translate(-half_screen+400 , 0 ) ;
+        translate(-half_screen+(screen_width/2) , 0 ) ;
     }
 
 
@@ -84,8 +94,8 @@ void draw() {
     {
         if(gndObj != null )
         {
-            image(gnd , gndObj.from ,600-100);
-            gnd.resize(gndObj.to , 100);
+            image(gnd , gndObj.from , screen_height-Ground.height );
+            gnd.resize(gndObj.to , Ground.height );
 
             // image(gnd , gndObj.from ,600-40);
             // temp = gnd.width ; 
@@ -99,6 +109,8 @@ void draw() {
             // gnd.resize(gndObj.to , 100);
         }
     }
+
+
 
     // move the fireballs 
     // Iterator<FireBall> iter =  mario_fire.iterator(); 
@@ -144,7 +156,7 @@ void draw() {
             {
                 if(superMario.is_touch_ground(shapes))
                 {
-                    superMario.set_jump_status(30) ;
+                    superMario.set_jump_status(mario_jump_step) ;
                     superMario.change_photo(mario_jump,50,50) ;
                     superMario.jump_up() ;
                 }
@@ -165,14 +177,14 @@ void draw() {
             }
             if (isLEFTPressed)
             {
-                if (superMario.get_x() > half_screen-399)
+                if (superMario.get_x() > half_screen-screen_width/2)
                     if(superMario.is_intersect(shapes) != 4)
                         superMario.walk_left(mario_right) ;
             }
             // for fire ball 
             if(isShiftPressed)
             {
-                if(superMario.get_last_time_fire()+300 < millis() )
+                if(superMario.get_last_time_fire()+time_between_fireball < millis() )
                 {
                     mario_fire.add(new FireBall(1 , superMario.get_x() , superMario.get_y() , 
                                 fire_ball , superMario.get_dir())) ;

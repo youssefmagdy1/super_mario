@@ -2,6 +2,7 @@ static class Ground
 {
     static Ground[] grounds = new Ground[20]  ;
     static int last_index = 0 ;
+    static int height ;
     private int from  ,to ; 
 
     
@@ -13,6 +14,7 @@ static class Ground
     public static void insert(int _from , int _to ) {
         grounds[last_index++] = new Ground( _from , _to) ;
     }
+
 
     // public  void draw (PImage img ,int h , int height  )
     // {

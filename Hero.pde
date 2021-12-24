@@ -6,12 +6,14 @@ class Hero extends GameObj
     private int jump_status = 0 ; 
     GameObj[] objects_array ; 
     int last_time_fire =0 ;
+    int screen_height ;
+    int drop_rate = 8 ;
 
-    public Hero(PImage img)
+    public Hero(PImage img , int h , int w , int sh)
     {
-        super(10 , 600-(100+30) ,true , img , 50 , 50) ; 
+        super(10 , sh-(Ground.height+h) ,true , img , h , w ) ; 
         this.set_dir('R') ;
-
+        this.screen_height = sh ;
     }
 
     public int get_level()
@@ -37,13 +39,14 @@ class Hero extends GameObj
 
     private boolean is_touch_ground(GameObj[] objects_arr  )
     {
-        if(this.is_intersect(this.objects_array) == 1 )
+        if(this.is_intersect(objects_arr ) == 1 )
             return true ;
+
         for(Ground gnd : Ground.grounds){
             if(gnd != null){
                 // println(gnd.from + " " + this.get_x() + " "+ gnd.to ) ;
                 if(this.get_x() > gnd.from  && this.get_x() < gnd.to){
-                    if(this.get_y() == 600-(100+30)){
+                    if( abs (this.get_y() - (this.screen_height-(Ground.height+this.get_height()) )) <= this.drop_rate ){
                         return true ;
                     }
                 }
@@ -83,7 +86,7 @@ class Hero extends GameObj
     }
     public void drop_down()
     {
-        this.move(0,5) ;
+        this.move(0,this.drop_rate) ;
     }
 
     public void set_jump_status(int i )
@@ -106,15 +109,21 @@ class Hero extends GameObj
     public void draw( PImage[] img_arr , GameObj[] objects_arr)
     {
         if(!this.is_touch_ground(objects_arr)  && this.check_jump_status() == 0 )
+        {
             this.drop_down(); 
+            change_photo(img_arr[2] , 50 , 50 ) ;
+        }
         else if( this.check_jump_status() > 0 )
+        {
             this.jump_up() ;
-        else 
+            change_photo(img_arr[2] , 50 , 50 ) ;
+        }
+        else{
             if(this.get_dir()=='R')
                 change_photo(img_arr[0] , 50 , 50 ) ;
             else 
                 change_photo(img_arr[1] , 50 , 50 ) ;
-
+        }
         super.draw() ;
     }
 
