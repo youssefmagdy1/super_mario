@@ -35,8 +35,7 @@ Evil[] evils = new Evil[10] ;
 // Ground[] ground = new Ground[20] ; 
 PImage evil_img ;
 PImage mario_jump , mario_left , mario_right , fire_ball, sun, moon; 
-PImage gnd , pipe , block, background_day, background_night;
-PImage special_block;
+PImage gnd , pipe , block, background_day, background_night, coin;
 
 /*
     0=> orignal 
@@ -62,7 +61,8 @@ void setup() {
     pipe = loadImage("pngegg (2).png") ;
     block = loadImage("pngegg (1).png") ;
     evil_img = loadImage("pngegg (5).png") ;
-    special_block = loadImage("special.png");
+    coin = loadImage("coin.png");
+
     mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
 
 
@@ -82,17 +82,13 @@ void setup() {
 
     Ground.insert(-10 ,1000) ;
 
-    shapes[0] = new GameObj(1000 , (600-100)-150 , false , pipe , 150 , 200 ) ;
-    shapes[1] = new GameObj(450 , (600-100)- 180 , false , block , 50 , 50 ) ;
-    shapes[2] = new GameObj(650, (600 - 100) - 180, false, block, 50, 50);
-    shapes[3] = new GameObj(700, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[4] = new GameObj(750, (600 - 100) - 180, false, block, 50, 50);
-    shapes[5] = new GameObj(800, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[6] = new GameObj(850, (600 - 100) - 180, false, block, 50, 50);
-    shapes[7] = new GameObj(750, (600 - 100) - 350, false, special_block, 50, 50);    
-    
-    evils[0] = new Evil(980, (600 - 100) - 100, evil_img, 50, 30, screen_height);
-    
+    shapes[0] = new GameObj(500 , (600-100)-200 , false , pipe , 200 , 200 ) ;
+    shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
+    shapes[8] = new GameObj(360 , (600-100)-100 , false , block , 50 , 50, "block" ) ;
+
+    evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
+
+
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
@@ -210,11 +206,15 @@ void draw() {
               String special_type = shape.get_type();
               if(special_type == "block"){
                 if(intersection == 1){
-                  block_effect();
+                  block_effect(shape);
                 }
-              }  
-        }
-          
+              }
+              if(special_type == "coin"){
+                if(intersection > 0){
+                  coin_effect();
+                }
+              }
+             }
 
             shape.draw() ;
     }}
@@ -293,6 +293,13 @@ void keyReleased() {
 }
 
 
-void block_effect(){
-  println("block effect");
+void block_effect(GameObj block){
+    GameObj coin1 = new GameObj(block.get_x(), block.get_y()-60,false, coin, 50, 50, "coin");
+    shapes[9]  = coin1;
+    coin1.draw();
+  
+}
+void coin_effect(){
+   println("coinTaken");
+   shapes[9] = null;
 }
