@@ -82,7 +82,7 @@ class GameObj {
     String get_type(){
       return this.special_type;
     }
-    GameObj get_intersect_index(){
+    GameObj get_intersect_obj(){
       return this.index;
     }
     
@@ -102,13 +102,18 @@ class GameObj {
     */
     int is_intersect (GameObj[] objects_array)
     {
+        return this.is_intersect(objects_array , false ) ;
+    }
+
+    int is_intersect (GameObj[] objects_array ,boolean debug ) 
+    {
         int temp =-1 ;
         if(objects_array != null)
             for(GameObj obj : objects_array)
             {
                 if(obj != null)
                 {
-                    temp = Intersect.check(this , obj) ;
+                    temp = Intersect.check(this , obj , debug) ;
                     if (temp > 0 )
                     {
                         this.index = obj ; 

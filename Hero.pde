@@ -110,7 +110,21 @@ class Hero extends GameObj
     {
 
         // check for evil intersect 
-        int tmp = is_intersect(evils) ;
+        int tmp =  this.is_intersect(evils, true);
+        // println(tmp) ;
+        if(tmp == 1 )
+        {
+            int t = this.get_intersect_obj().get_y() +this.get_intersect_obj().get_height() ;
+            println("win");
+            // println( t,this.get_intersect_obj().get_x()) ;
+            // println(this.get_y() , this.get_x()) ;
+        }
+        else if (tmp > 0 )
+        {   
+            println("lose");
+
+            // this.dec_level() ;
+        }
             
         // if(this.is_intersect(evils) )
 
@@ -147,6 +161,17 @@ class Hero extends GameObj
         this.last_time_fire = t  ; 
     }
 
+    public void dec_level()
+    {
+        if(this.get_level() > 0)
+            this.set_level(this.get_level() -1 );
+        else 
+            this.lose();
+    }
 
+    public void lose()
+    {
+        println("lose") ;
+    }
 
 }

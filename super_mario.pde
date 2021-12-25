@@ -85,6 +85,7 @@ void setup() {
     shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
 
     evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
+    evils[1] = new Evil(300 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
 
 
     // Ground.draw(gnd, 40 , 600 ) ;
@@ -140,7 +141,7 @@ void draw() {
     {
         if(evil != null)
         {
-            println("done") ;
+            // println("done") ;
             evil.update(shapes) ;
             evil.draw() ;
         }
@@ -198,7 +199,7 @@ void draw() {
         if(shape != null)
         {
             // ball.update();
-            int intersection = Intersect.check(superMario, shape);
+            int intersection = Intersect.check(superMario, shape ,false );
             boolean special_status = shape.get_special();
             if(special_status){
               String special_type = shape.get_type();
