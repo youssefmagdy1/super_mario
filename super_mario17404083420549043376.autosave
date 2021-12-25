@@ -1,17 +1,15 @@
 ///adfaffsdfsfdasfsafd
 import java.util.*;
-float angle = 0.0, sun_motion = 0.0;
+
 int screen_width = 1000 ; int screen_height = 600 ;
 int half_screen = screen_width/2 ; 
-int ground_height = 100;
-int background_counter = 1;
-boolean background_f = true;
-int change_backgrond_sec = 30 ; // in 
+int ground_height = 100 ;
+
 
 int mario_height = 50 ;
 int mario_width = 50 ; 
 
-int mario_jump_step = 40 ; // this step is * by 5 
+int mario_jump_step = 50 ; // this step is * by 5 
 int time_between_fireball = 400 ; // this time is in millesec
 
 
@@ -28,14 +26,11 @@ List<FireBall> mario_fire=new ArrayList<FireBall>();
 
 GameObj[] shapes = new GameObj[10] ; 
 Hero superMario ;  
-Evil[] evils = new Evil[10] ;
-
+PImage mario_jump , mario_left , mario_right , fire_ball; 
 
 // PImage gnd , superMarioRed , su ; 
 // Ground[] ground = new Ground[20] ; 
-PImage evil_img ;
-PImage mario_jump , mario_left , mario_right , fire_ball, sun, moon; 
-PImage gnd , pipe , block, background_day, background_night;
+PImage gnd , pipe , block;
 
 /*
     0=> orignal 
@@ -49,7 +44,6 @@ PImage[] mario_photos_arr =  new PImage[6] ;
 
 void setup() {
     size(1000, 600);
-    smooth();
     Ground.height = ground_height ; 
 
 
@@ -60,33 +54,17 @@ void setup() {
     fire_ball = loadImage("fireball.png") ;
     pipe = loadImage("pngegg (2).png") ;
     block = loadImage("pngegg (1).png") ;
-    evil_img = loadImage("pngegg (5).png") ;
-
-    mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
 
 
 
-    background_day = loadImage("sky_day.jpg");
-    background_night = loadImage("sky_night.jpg");
-    sun = loadImage("sun.png");
-    moon = loadImage("moon.png");
-    
-    background_day.resize(1000, 600);
-    background_night.resize(1000, 600);
-    sun.resize(150, 150);
-    moon.resize(100, 100);    
-    
-    
     superMario = new Hero( mario_right , mario_height , mario_width , screen_height) ; 
+    Ground.insert(0 ,1000) ;
 
-    Ground.insert(-10 ,1000) ;
 
     shapes[0] = new GameObj(500 , (600-100)-200 , false , pipe , 200 , 200 ) ;
     shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
 
-    evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
-
-
+    mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
@@ -96,33 +74,8 @@ void setup() {
 void draw() {
 
     // background 
-    int co = millis();
-    if(co > ( change_backgrond_sec * 1000 * background_counter)){
-        ++background_counter;
-        if(background_f == true)
-            background_f = false;
-        else
-          background_f = true;
-    }
-    
-    if(background_f == true){    
-        background(background_day);
-        pushMatrix();
-        translate(100, 100);
-        rotate(angle);
-        imageMode(CENTER);
-        image(sun, 0, 0);
-        angle += 0.01;
-        popMatrix();
-        imageMode(CORNER);
-    }
-    else{
-        background(background_night);
-        imageMode(CENTER);
-        image(moon, 100, 100);
-        imageMode(CORNER);
-     }
-    
+    background(0, 0, 0);
+
 
     // when move to half of screen  translate the screen
     if(superMario.get_x() > half_screen )
@@ -133,17 +86,6 @@ void draw() {
     else 
     {
         translate(-half_screen+(screen_width/2) , 0 ) ;
-    }
-
-
-    for(Evil evil : evils)
-    {
-        if(evil != null)
-        {
-            println("done") ;
-            evil.update(shapes) ;
-            evil.draw() ;
-        }
     }
 
 
@@ -181,6 +123,7 @@ void draw() {
             {
                 // iter.remove();
                 // mario_fire.remove(ball) ;
+                println("done") ;
             }
             else
             {
@@ -206,12 +149,18 @@ void draw() {
                 if(intersection == 1){
                   block_effect();
                 }
-              }  
+              }
+              else if(intersection > 0 && special_type == "evil"){
+              
+                evil_effect();
+              }
+              
         }
           
-
             shape.draw() ;
-    }}
+            
+        }
+    }
 
     
     // move mario on key press 
@@ -244,7 +193,7 @@ void draw() {
             }
             if (isLEFTPressed)
             {
-                if (superMario.get_x() > half_screen-screen_width/2 )
+                if (superMario.get_x() > half_screen-screen_width/2)
                     if(superMario.is_intersect(shapes) != 4)
                         superMario.walk_left(mario_right) ;
             }
@@ -263,7 +212,7 @@ void draw() {
     
     // println(this.superMario.is_intersect(shapes)) ;
     // draw super mario 
-    superMario.draw(mario_photos_arr , shapes , evils) ;
+    superMario.draw(mario_photos_arr , shapes) ;
 
 
 }
@@ -289,4 +238,7 @@ void keyReleased() {
 
 void block_effect(){
   println("block effect");
+}
+void evil_effect(){
+  println("evil effect");
 }

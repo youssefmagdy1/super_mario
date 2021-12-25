@@ -1,6 +1,6 @@
 class Hero extends GameObj
 {
-    int level ;
+    int level=0 ;
     int super_start_time=0 ; 
     char dir  ;
     private int jump_status = 0 ; 
