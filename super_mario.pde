@@ -82,17 +82,16 @@ void setup() {
 
     Ground.insert(-10 ,1000) ;
 
-    shapes[0] = new GameObj(750 , (600-100)-150 , false , pipe , 150 , 200 ) ;
-    shapes[1] = new GameObj(250 , (600-100)- 180 , false , block , 50 , 50 ) ;
-    shapes[2] = new GameObj(350, (600 - 100) - 180, false, block, 50, 50);
-    shapes[3] = new GameObj(400, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[4] = new GameObj(450, (600 - 100) - 180, false, block, 50, 50);
-    shapes[5] = new GameObj(500, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[6] = new GameObj(550, (600 - 100) - 180, false, block, 50, 50);
-    shapes[7] = new GameObj(450, (600 - 100) - 350, false, special_block, 50, 50);
+    shapes[0] = new GameObj(1000 , (600-100)-150 , false , pipe , 150 , 200 ) ;
+    shapes[1] = new GameObj(450 , (600-100)- 180 , false , block , 50 , 50 ) ;
+    shapes[2] = new GameObj(650, (600 - 100) - 180, false, block, 50, 50);
+    shapes[3] = new GameObj(700, (600 - 100) - 180, false, special_block, 50, 50);
+    shapes[4] = new GameObj(750, (600 - 100) - 180, false, block, 50, 50);
+    shapes[5] = new GameObj(800, (600 - 100) - 180, false, special_block, 50, 50);
+    shapes[6] = new GameObj(850, (600 - 100) - 180, false, block, 50, 50);
+    shapes[7] = new GameObj(750, (600 - 100) - 350, false, special_block, 50, 50);    
     
-    evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
-    evils[1] = new Evil(730, (600 - 100) - 100, evil_img, 50, 30, screen_height);
+    evils[0] = new Evil(980, (600 - 100) - 100, evil_img, 50, 30, screen_height);
     
     // Ground.draw(gnd, 40 , 600 ) ;
 
