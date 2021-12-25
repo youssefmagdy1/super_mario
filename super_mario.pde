@@ -199,12 +199,7 @@ void draw() {
                 if(intersection == 1){
                   block_effect();
                 }
-              }
-              else if(intersection > 0 && special_type == "evil"){
-              
-                evil_effect();
-              }
-              
+              }  
         }
           
 
@@ -287,7 +282,4 @@ void keyReleased() {
 
 void block_effect(){
   println("block effect");
-}
-void evil_effect(){
-  println("evil effect");
 }
