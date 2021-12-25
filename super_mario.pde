@@ -27,6 +27,7 @@ List<FireBall> mario_fire=new ArrayList<FireBall>();
 
 
 GameObj[] shapes = new GameObj[10] ; 
+GameObj[] special_shapes = new GameObj[10] ; 
 Hero superMario ;  
 Evil[] evils = new Evil[10] ;
 
@@ -142,7 +143,7 @@ void draw() {
     {
         if(evil != null)
         {
-            println("done") ;
+            
             evil.update(shapes) ;
             evil.draw() ;
         }
@@ -204,22 +205,37 @@ void draw() {
             boolean special_status = shape.get_special();
             if(special_status){
               String special_type = shape.get_type();
-              if(special_type == "block"){
-                if(intersection == 1){
+              if(special_type == "block" && intersection == 2 && special_shapes[0] == null){
+                  
                   block_effect(shape);
-                }
+                
               }
-              if(special_type == "coin"){
-                if(intersection > 0){
-                  coin_effect();
-                }
-              }
-             }
-
+              
+            }
             shape.draw() ;
+            println(intersection);
     }}
 
     
+    
+    for(GameObj shape : special_shapes)
+    {
+        if(shape != null)
+        {
+            // ball.update();
+            int intersection = Intersect.check(superMario, shape);
+            boolean special_status = shape.get_special();
+            if(special_status){
+              String special_type = shape.get_type();
+              
+              if(special_type == "coin" && intersection > 0){
+                                 
+                  coin_effect();
+              }
+           }
+
+            shape.draw() ;
+    }}
     // move mario on key press 
     // if(keyPressed)
     // {
@@ -295,11 +311,12 @@ void keyReleased() {
 
 void block_effect(GameObj block){
     GameObj coin1 = new GameObj(block.get_x(), block.get_y()-60,false, coin, 50, 50, "coin");
-    shapes[9]  = coin1;
-    coin1.draw();
-  
+    special_shapes[0]  = coin1;
 }
 void coin_effect(){
+  
    println("coinTaken");
-   shapes[9] = null;
+   println(special_shapes[0]);
+   special_shapes[0] = null;
+   println(special_shapes[0]);
 }
