@@ -1,6 +1,6 @@
 ///adfaffsdfsfdasfsafd
 import java.util.*;
-
+float angle = 0.0, sun_motion = 0.0;
 int screen_width = 1000 ; int screen_height = 600 ;
 int half_screen = screen_width/2 ; 
 int ground_height = 100;
@@ -45,6 +45,7 @@ PImage[] mario_photos_arr =  new PImage[6] ;
 
 void setup() {
     size(1000, 600);
+    smooth();
     Ground.height = ground_height ; 
 
 
@@ -60,12 +61,10 @@ void setup() {
     sun = loadImage("sun.png");
     moon = loadImage("moon.png");
     
-    
     background_day.resize(1000, 600);
     background_night.resize(1000, 600);
     sun.resize(150, 150);
-    moon.resize(150, 150);
-    
+    moon.resize(100, 100);    
     
     
     superMario = new Hero( mario_right , mario_height , mario_width , screen_height) ; 
@@ -96,13 +95,21 @@ void draw() {
     
     if(background_f == true){    
         background(background_day);
-        image(sun, 50, 50);  
+        pushMatrix();
+        translate(100, 100);
+        rotate(angle);
+        imageMode(CENTER);
+        image(sun, 0, 0);
+        angle += 0.01;
+        popMatrix();
+        imageMode(CORNER);
     }
     else{
         background(background_night);
-        image(moon, 50, 50);
-      }
-
+        imageMode(CENTER);
+        image(moon, 100, 100);
+        imageMode(CORNER);
+     }
     
 
     // when move to half of screen  translate the screen
