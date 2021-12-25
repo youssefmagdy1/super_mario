@@ -130,7 +130,7 @@ class GameObj {
 
     public void draw()
     {
-        image(this.img , this.get_x() , this.get_y() , this.get_height() , this.get_width()) ; 
+        image(this.img , this.get_x() , this.get_y(), this.get_height() , this.get_width()) ; 
     } 
 
     public char get_dir()
