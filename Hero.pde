@@ -106,8 +106,15 @@ class Hero extends GameObj
     // }
 
 
-    public void draw( PImage[] img_arr , GameObj[] objects_arr)
+    public void draw( PImage[] img_arr , GameObj[] objects_arr ,Evil[] evils )
     {
+
+        // check for evil intersect 
+        int tmp = is_intersect(evils) ;
+            
+        // if(this.is_intersect(evils) )
+
+        // touching ground and jump power 
         if(!this.is_touch_ground(objects_arr)  && this.check_jump_status() == 0 )
         {
             this.drop_down(); 
@@ -124,6 +131,10 @@ class Hero extends GameObj
             else 
                 change_photo(img_arr[1] , 50 , 50 ) ;
         }
+
+        
+
+
         super.draw() ;
     }
 
@@ -135,6 +146,7 @@ class Hero extends GameObj
     {
         this.last_time_fire = t  ; 
     }
+
 
 
 }

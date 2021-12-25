@@ -8,6 +8,7 @@ class GameObj {
     protected boolean is_special =false;
     protected String special_type = null;
     public boolean is_move , is_vis; 
+    protected GameObj index  ;
     
     public GameObj(int _x , int _y , boolean _is_move , PImage img, int h , int w)
     {
@@ -64,7 +65,7 @@ class GameObj {
     }
     
     void set_special(){
-      is_special = true;
+      this.is_special = true;
     }
     
     boolean get_special(){
@@ -73,13 +74,16 @@ class GameObj {
     
     void set_type(String type){
       if(type != null){
-        special_type = type;
+        this.special_type = type;
         set_special();
       }
     }
     
     String get_type(){
-      return special_type;
+      return this.special_type;
+    }
+    GameObj get_intersect_index(){
+      return this.index;
     }
     
     void change_photo(PImage  _img , int h , int w )
@@ -106,8 +110,10 @@ class GameObj {
                 {
                     temp = Intersect.check(this , obj) ;
                     if (temp > 0 )
-                        
+                    {
+                        this.index = obj ; 
                         break ;  
+                    }
                 }         
             }
         return temp ;
