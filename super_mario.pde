@@ -36,6 +36,7 @@ Evil[] evils = new Evil[10] ;
 PImage evil_img ;
 PImage mario_jump , mario_left , mario_right , fire_ball, sun, moon; 
 PImage gnd , pipe , block, background_day, background_night;
+PImage special_block;
 
 /*
     0=> orignal 
@@ -61,7 +62,7 @@ void setup() {
     pipe = loadImage("pngegg (2).png") ;
     block = loadImage("pngegg (1).png") ;
     evil_img = loadImage("pngegg (5).png") ;
-
+    special_block = loadImage("special.png");
     mario_photos_arr[0] = mario_right ; mario_photos_arr[2] = mario_jump ; mario_photos_arr[1] = mario_left ; 
 
 
@@ -81,13 +82,17 @@ void setup() {
 
     Ground.insert(-10 ,1000) ;
 
-    shapes[0] = new GameObj(500 , (600-100)-200 , false , pipe , 200 , 200 ) ;
-    shapes[1] = new GameObj(300 , (600-100)-100 , false , block , 50 , 50 ) ;
-
-    evils[0] = new Evil(900 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
-    evils[1] = new Evil(300 , (600-100)-100  , evil_img , 40 , 30 ,screen_height) ; 
-
-
+    shapes[0] = new GameObj(1000 , (600-100)-150 , false , pipe , 150 , 200 ) ;
+    shapes[1] = new GameObj(450 , (600-100)- 180 , false , block , 50 , 50 ) ;
+    shapes[2] = new GameObj(650, (600 - 100) - 180, false, block, 50, 50);
+    shapes[3] = new GameObj(700, (600 - 100) - 180, false, special_block, 50, 50);
+    shapes[4] = new GameObj(750, (600 - 100) - 180, false, block, 50, 50);
+    shapes[5] = new GameObj(800, (600 - 100) - 180, false, special_block, 50, 50);
+    shapes[6] = new GameObj(850, (600 - 100) - 180, false, block, 50, 50);
+    shapes[7] = new GameObj(750, (600 - 100) - 350, false, special_block, 50, 50);    
+    
+    evils[0] = new Evil(980, (600 - 100) - 100, evil_img, 50, 30, screen_height);
+    
     // Ground.draw(gnd, 40 , 600 ) ;
 
     
