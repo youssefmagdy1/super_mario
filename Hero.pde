@@ -8,6 +8,7 @@ class Hero extends GameObj
     int last_time_fire =0 ;
     int screen_height ;
     int drop_rate = 8 ;
+    int jump_rate = 7 ;
 
     public Hero(PImage img , int h , int w , int sh)
     {
@@ -37,11 +38,8 @@ class Hero extends GameObj
         this.super_start_time = millis() ; 
     }
 
-    private boolean is_touch_ground(GameObj[] objects_arr  )
+    private boolean is_touch_ground(  )
     {
-        if(this.is_intersect(objects_arr ) == 1 )
-            return true ;
-
         for(Ground gnd : Ground.grounds){
             if(gnd != null){
                 // println(gnd.from + " " + this.get_x() + " "+ gnd.to ) ;
@@ -64,7 +62,7 @@ class Hero extends GameObj
 
     public void jump_up()
     {
-        this.move(0,-5) ;
+        this.move(0,-this.jump_rate) ;
         this.set_jump_status(this.jump_status - 1 ) ;
     }
 
@@ -110,12 +108,31 @@ class Hero extends GameObj
     {
 
         // check for evil intersect 
-        int tmp = is_intersect(evils) ;
+        int tmp =  this.is_intersect(evils, true);
+        // println(tmp) ;
+        if(tmp == 1 )
+        {
+            int t = this.get_intersect_obj().get_y() +this.get_intersect_obj().get_height() ;
+            println("win");
+            // println( t,this.get_intersect_obj().get_x()) ;
+            // println(this.get_y() , this.get_x()) ;
+        }
+        else if (tmp > 0 )
+        {   
+            println("lose");
+
+            // this.dec_level() ;
+        }
+
+        int obj_intersection = this.is_intersect(objects_arr ,true) ; 
+       
+        if( obj_intersection == 2 )
+            this.set_jump_status(0 )  ; 
             
         // if(this.is_intersect(evils) )
 
         // touching ground and jump power 
-        if(!this.is_touch_ground(objects_arr)  && this.check_jump_status() == 0 )
+        if(!( this.is_touch_ground() || obj_intersection == 1  )  && this.check_jump_status() == 0 )
         {
             this.drop_down(); 
             change_photo(img_arr[2] , 50 , 50 ) ;
@@ -147,6 +164,17 @@ class Hero extends GameObj
         this.last_time_fire = t  ; 
     }
 
+    public void dec_level()
+    {
+        if(this.get_level() > 0)
+            this.set_level(this.get_level() -1 );
+        else 
+            this.lose();
+    }
 
+    public void lose()
+    {
+        println("lose") ;
+    }
 
 }

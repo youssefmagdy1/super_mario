@@ -1,7 +1,7 @@
 class Evil extends GameObj
 {
 
-    int step = 5 ; 
+    int step = 3 ; 
     int screen_height ; 
     int drop_rate = 7 ; 
 
@@ -31,9 +31,18 @@ class Evil extends GameObj
 
     public void update (GameObj[] objects_arr)
     {
-        if(this.is_intersect(objects_arr) == 3 )
+        int temp = this.is_intersect(objects_arr,true) ;
+        // t
+        // println(this.get_x() , this.index.get_x() ,  this.index.get_height());
+        // if(temp > 0 ){
+        //     println(temp ) ;
+        // // println( this.get_x() , this.index.get_x() ,  this.index.get_width());
+        // // println( this.get_y() ,  this.get_height() ,  this.index.get_y() , this.index.get_height());
+
+        // }
+        if( temp == 3 )
             this.set_dir('L');
-        if(this.is_intersect(objects_arr) == 4 )
+        if( temp == 4 )
             this.set_dir('R') ;
 
         if(this.get_dir()=='L')

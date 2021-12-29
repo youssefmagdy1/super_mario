@@ -1,6 +1,6 @@
 static class Intersect{
 
-    static int check (GameObj obj1 , GameObj obj2 )
+    static int check (GameObj obj1 , GameObj obj2 , boolean  debug)
     {
        int obj1_x = obj1.get_x()  ,
            obj1_y = obj1.get_y() ,
@@ -42,28 +42,14 @@ static class Intersect{
 
 
         
-
-        // println(obj2_h , obj2_w , obj2_x , obj2_y ) ;
-        // println(obj1_h , obj1_w , obj1_x , obj1_y ) ;
-        //down
-        // obj1 hit obj2 from bottom 
-        if( abs( obj1_y + obj1_h - obj2_y )< 5   
-            &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
-                ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
-            )
-        ) 
-            return 1 ;
-
-        // up  
-        else if(  obj1_y == obj2_y +obj2_h
-            &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
-                ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
-            )
-        ) 
-            return 2 ;
+        if(debug)
+        {
+            // println(obj2_h , obj2_w , obj2_x , obj2_y ) ;
+            // println(obj1_h , obj1_w , obj1_x , obj1_y ) ;
+        }
 
         // right 
-        else if ( abs(obj1_x+obj1_w  - obj2_x ) < 7 
+        if ( abs(obj1_x+obj1_w  - obj2_x ) < 7 
             &&(   (obj1_y >= obj2_y && obj1_y <= obj2_y+obj2_h  ) 
                 ||( obj1_y+obj1_h >= obj2_y && obj1_y+obj1_h <= obj2_y+obj2_h  ) 
             )
@@ -78,6 +64,25 @@ static class Intersect{
             )
         )
             return 4 ;  
+
+        //down
+        // obj1 hit obj2 from bottom 
+        else if( abs( obj1_y + obj1_h - obj2_y ) < 7  
+            &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
+                ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
+            )
+        ) 
+            return 1 ;
+
+        // up  
+        else if(  abs (obj1_y - (obj2_y +obj2_h) ) < 4 
+            &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
+                ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
+            )
+        ) 
+            return 2 ;
+
+        
 
 
         else 
