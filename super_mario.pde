@@ -1,5 +1,7 @@
 //alllllllllllllllllllllllo
 import java.util.*;
+final String ninja = "ninja", zombie = "zombie", robot = "robot", water = "water", crystal = "crystal", 
+             box = "box", special_box = "special_box";
 float angle = 0.0, sun_motion = 0.0;
 int screen_width = 1000 ; int screen_height = 600 ;
 int half_screen = screen_width/2 ; 
