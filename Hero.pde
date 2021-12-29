@@ -124,7 +124,7 @@ class Hero extends GameObj
             // this.dec_level() ;
         }
 
-        int obj_intersection = this.is_intersect(objects_arr) ; 
+        int obj_intersection = this.is_intersect(objects_arr ,true) ; 
        
         if( obj_intersection == 2 )
             this.set_jump_status(0 )  ; 
