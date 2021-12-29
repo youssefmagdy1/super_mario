@@ -1,4 +1,4 @@
-///adfaffsdfsfdasfsafd
+//alllllllllllllllllllllllo
 import java.util.*;
 float angle = 0.0, sun_motion = 0.0;
 int screen_width = 1000 ; int screen_height = 600 ;
