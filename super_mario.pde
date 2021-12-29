@@ -82,14 +82,15 @@ void setup() {
 
     Ground.insert(-10 ,1000) ;
 
-    shapes[0] = new GameObj(1000 , (600-100)-150 , false , pipe , 150 , 200 ) ;
-    shapes[1] = new GameObj(450 , (600-100)- 180 , false , block , 50 , 50 ) ;
-    shapes[2] = new GameObj(650, (600 - 100) - 180, false, block, 50, 50);
-    shapes[3] = new GameObj(700, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[4] = new GameObj(750, (600 - 100) - 180, false, block, 50, 50);
-    shapes[5] = new GameObj(800, (600 - 100) - 180, false, special_block, 50, 50);
-    shapes[6] = new GameObj(850, (600 - 100) - 180, false, block, 50, 50);
-    shapes[7] = new GameObj(750, (600 - 100) - 350, false, special_block, 50, 50);    
+    // ( x  ,  y    , is_move , img , height , width ) 
+    shapes[0] = new GameObj(1000 ,y( 150), false , pipe , 150 , 200 ) ;
+    shapes[1] = new GameObj(400 ,y( 180), false , block , 50 , 50 ) ;
+    shapes[2] = new GameObj(650, y( 180), false, block, 50, 50);
+    shapes[3] = new GameObj(700, y( 180), false, special_block, 50, 50);
+    shapes[4] = new GameObj(750, y( 180), false, block, 50, 50);
+    shapes[5] = new GameObj(800, y( 180), false, special_block, 50, 50);
+    shapes[6] = new GameObj(850, y( 180), false, block, 50, 50);
+    shapes[7] = new GameObj(750, y( 350), false, special_block, 50, 50);    
     
     evils[0] = new Evil(980, (600 - 100) - 100, evil_img, 50, 30, screen_height);
     
@@ -221,57 +222,17 @@ void draw() {
 
     
     // move mario on key press 
-    // if(keyPressed)
-    // {
-        // if (key == CODED) {
-            // if (keyCode == UP) 
-            if (isUPPressed) 
-            {
-                if(superMario.is_touch_ground(shapes))
-                {
-                    superMario.set_jump_status(mario_jump_step) ;
-                    superMario.change_photo(mario_jump,50,50) ;
-                    superMario.jump_up() ;
-                }
-            }
-            // if (keyCode == RIGHT )
-            if (isRIGHTPressed)
-            {
-                if(superMario.is_intersect(shapes) != 3)
-                    superMario.walk_right(mario_left) ;
-            }
-            // if (keyCode == DOWN) 
-            if (isDOWNPressed) 
-            {
-                if(!superMario.is_touch_ground(shapes))
-                {
-                    superMario.drop_down() ;
-                }
-            }
-            if (isLEFTPressed)
-            {
-                if (superMario.get_x() > half_screen-screen_width/2 )
-                    if(superMario.is_intersect(shapes) != 4)
-                        superMario.walk_left(mario_right) ;
-            }
-            // for fire ball 
-            if(isShiftPressed)
-            {
-                if(superMario.get_last_time_fire()+time_between_fireball < millis() )
-                {
-                    mario_fire.add(new FireBall(1 , superMario.get_x() , superMario.get_y() , 
-                                fire_ball , superMario.get_dir())) ;
-                    superMario.set_last_time_fire(millis()) ;
-                }
-            }
-        // }
-    // }
+    move_mario() ;
     
     // println(this.superMario.is_intersect(shapes)) ;
     // draw super mario 
     superMario.draw(mario_photos_arr , shapes , evils) ;
 
+}
 
+int y(int y )
+{
+    return (screen_height - ground_height) - y ;
 }
 
 void keyPressed() {
@@ -295,4 +256,51 @@ void keyReleased() {
 
 void block_effect(){
   println("block effect");
+}
+
+void move_mario()
+{
+    boolean touch_ground = superMario.is_touch_ground() ; 
+    int obj_intersection =  superMario.is_intersect(shapes)  ; 
+    touch_ground = (touch_ground || (obj_intersection == 1) )? true : false ;
+
+    if (isUPPressed) 
+    {
+        if(touch_ground)
+        {
+            superMario.set_jump_status(mario_jump_step) ;
+            superMario.change_photo(mario_jump,50,50) ;
+            superMario.jump_up() ;
+        }
+    }
+    // if (keyCode == RIGHT )
+    if (isRIGHTPressed)
+    {
+        if(obj_intersection != 3)
+            superMario.walk_right(mario_left) ;
+    }
+    // if (keyCode == DOWN) 
+    if (isDOWNPressed) 
+    {
+        if(!touch_ground)
+        {
+            superMario.drop_down() ;
+        }
+    }
+    if (isLEFTPressed)
+    {
+        if (superMario.get_x() > half_screen-screen_width/2 )
+            if(obj_intersection != 4)
+                superMario.walk_left(mario_right) ;
+    }
+    // for fire ball 
+    if(isShiftPressed)
+    {
+        if(superMario.get_last_time_fire()+time_between_fireball < millis() )
+        {
+            mario_fire.add(new FireBall(1 , superMario.get_x() , superMario.get_y() , 
+                        fire_ball , superMario.get_dir())) ;
+            superMario.set_last_time_fire(millis()) ;
+        }
+    }
 }

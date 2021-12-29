@@ -34,12 +34,12 @@ class Evil extends GameObj
         int temp = this.is_intersect(objects_arr,true) ;
         // t
         // println(this.get_x() , this.index.get_x() ,  this.index.get_height());
-        if(temp > 0 ){
-            println(temp ) ;
-        println( this.get_x() , this.index.get_x() ,  this.index.get_width());
-        println( this.get_y() ,  this.get_height() ,  this.index.get_y() , this.index.get_height());
+        // if(temp > 0 ){
+        //     println(temp ) ;
+        // // println( this.get_x() , this.index.get_x() ,  this.index.get_width());
+        // // println( this.get_y() ,  this.get_height() ,  this.index.get_y() , this.index.get_height());
 
-        }
+        // }
         if( temp == 3 )
             this.set_dir('L');
         if( temp == 4 )

@@ -67,7 +67,7 @@ static class Intersect{
 
         //down
         // obj1 hit obj2 from bottom 
-        else if( abs( obj1_y + obj1_h - obj2_y )< 4  
+        else if( abs( obj1_y + obj1_h - obj2_y ) < 7  
             &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
                 ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
             )
@@ -75,7 +75,7 @@ static class Intersect{
             return 1 ;
 
         // up  
-        else if(  obj1_y == obj2_y +obj2_h
+        else if(  abs (obj1_y - (obj2_y +obj2_h) ) < 4 
             &&( (obj1_x >= obj2_x && obj1_x <= obj2_x+obj2_w  ) 
                 ||( obj1_x+obj1_w >= obj2_x && obj1_x+obj1_w <= obj2_x+obj2_w  ) 
             )
