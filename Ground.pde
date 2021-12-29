@@ -4,8 +4,12 @@ static class Ground
     static int last_index = 0 ;
     static int height ;
     private int from  ,to ; 
+    private String type;
 
-    
+    public Ground(int _from, int _to, String type){
+      this(_from, _to);
+      this.type = type;
+    }
     public  Ground (int _from , int _to  )
     {
         this.from = _from ;
@@ -13,6 +17,10 @@ static class Ground
     }
     public static void insert(int _from , int _to ) {
         grounds[last_index++] = new Ground( _from , _to) ;
+    }
+    public String get_type(){
+      
+      return type;
     }
 
 

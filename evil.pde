@@ -4,10 +4,15 @@ class Evil extends GameObj
     int step = 3 ; 
     int screen_height ; 
     int drop_rate = 7 ; 
-
+    
+    
     public Evil(int _x , int _y , PImage img , int _h , int _w , int _sh)
     {
-        super(_x , _y , true , img , _h , _w  );
+       this(_x, _y, img, _h, _w, _sh, null); 
+    }
+    public Evil(int _x , int _y , PImage img , int _h , int _w , int _sh, String type)
+    {
+        super(_x , _y , true , img , _h , _w, type);
         this.set_dir('L') ;
         this.screen_height= _sh  ;
     }

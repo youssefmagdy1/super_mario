@@ -5,8 +5,7 @@ class GameObj {
     protected int x_pos , y_pos ;
     protected char dir ;
     protected float img_scale ;
-    protected boolean is_special =false;
-    protected String special_type = null;
+    protected String type = null;
     public boolean is_move , is_vis; 
     protected GameObj index  ;
     
@@ -68,23 +67,14 @@ class GameObj {
         this.img.resize(x,y) ; 
     }
     
-    void set_special(){
-      this.is_special = true;
-    }
     
-    boolean get_special(){
-      return is_special;
-    }
     
     void set_type(String type){
-      if(type != null){
-        this.special_type = type;
-        set_special();
-      }
+      this.type = type;
     }
     
     String get_type(){
-      return this.special_type;
+      return this.type;
     }
     GameObj get_intersect_obj(){
       return this.index;
