@@ -205,31 +205,20 @@ void drawBackGround(){
 }
 
 void playMode(){ 
-    println("P");
     // when move to half of screen  translate the screen
-    if(superMario.get_x() > half_screen )
-    {
-        println("translate");
-        translate( -superMario.get_x() +(screen_width/2) , 0 );
-        half_screen = superMario.get_x() ; 
-    }
-    else 
-    {
-        translate(-half_screen+(screen_width/2) , 0 ) ;
-    }
-
+    
 
     for(Evil evil : evils)
     {
         if(evil != null)
         {
-            // println("done") ;
+            // //println("done") ;
             evil.update(shapes) ;
             evil.draw() ;
         }
     }
 
-
+    //println(mario_fire.size());
     //// draw the ground
     //drawGround();
     
@@ -247,24 +236,37 @@ void playMode(){
             }
             else
             {
+                println(ball.get_corr());
                 ball.update(screen_height , Ground.height , mario_height);
                 ball.draw() ;
-            }
-            
+            } 
         }
-        
     }
-
+      translate();
     //// draw shapes 
     //drawShapes();
     
     //// move mario on key press 
     //move_mario() ;
     
-    //// println(this.superMario.is_intersect(shapes)) ;
+    //// //println(this.superMario.is_intersect(shapes)) ;
     //// draw super mario 
     //superMario.draw(mario_photos_arr , shapes , evils) ;
 
+
+}
+
+void translate(){
+  if(superMario.get_x() > half_screen )
+    {
+        //println("translate");
+        translate( -superMario.get_x() +(screen_width/2) , 0 );
+        half_screen = superMario.get_x() ; 
+    }
+    else 
+    {
+        translate(-half_screen+(screen_width/2) , 0 ) ;
+    }
 }
 
 void drawGround(){
@@ -299,21 +301,18 @@ void drawShapes(){
             if(special_status){
               String special_type = shape.get_type();
               if(special_type == "block"){
-                if(intersection == 1){
+                if(intersection == 1)
                   block_effect();
-                }
-              }  
+                }  
+            }
+            shape.draw() ;
         }
-          
-
-      shape.draw() ;
-    }
     }
 }
 
 void insertLevelShapes(){
    // ( x  ,  y    , is_move , img , height , width ) 
-   shapes = new GameObj[10];
+    shapes = new GameObj[10];
     shapes[0] = new GameObj(1000 ,y( 150), false , pipe , 150 , 200 ) ;
     shapes[1] = new GameObj(400 ,y( 180), false , block , 50 , 50 ) ;
     shapes[2] = new GameObj(650, y( 180), false, block, 50, 50);
@@ -327,7 +326,6 @@ void insertLevelShapes(){
 }
 
 void tutorialMode(){
-  println("T");
   tutorial.update();
   if(tutorial.active==false){
     setupPlayMode();
